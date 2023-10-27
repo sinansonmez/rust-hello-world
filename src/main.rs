@@ -1,42 +1,14 @@
-use figlet_rs::FIGfont;
-use mendeleev::{Element, Isotope, Percent};
-
+// https://doc.rust-lang.org/rust-by-example/custom_types/structs.html
 fn main() {
-    if let Ok(standard_font) = FIGfont::standard() {
-        if let Some(figure) = standard_font.convert("Rusty world!") {
-            println!("{}", figure)
+    println!("-----------");
+    let xs: [i32; 4] = [1, 2, 3, 4];
+
+    for i in 0..xs.len() + 1 {
+        match xs.get(i) {
+            Some(xval) => println!("element {:?}", xval),
+            None => println!("element not found in index {}", i)
         }
     }
 
-    println!("Isotopes of Hydrogen:");
-    let hydrogen = Element::H;
-    let isotopes = Isotope::list()
-        .iter()
-        .filter_map(|iso| {
-            if iso.element() == hydrogen {
-                Some(iso)
-            } else {
-                None
-            }
-        })
-        .collect::<Vec<&Isotope>>();
-
-    let mut other_isotope: String;
-    for isotope in isotopes {
-        let name = match isotope {
-            Isotope::H1 => "Protium",
-            Isotope::H2 => "Deuterium",
-            Isotope::H3 => "Tritium",
-            _ => {
-                other_isotope = isotope.display_with_name();
-                &other_isotope
-            }
-        };
-
-        println!(
-            "  ⦿ {} ({})",
-            name,
-            isotope.natural_abundance().unwrap_or(Percent(0.0)),
-        );
-    }
+    println!("-----------");
 }
